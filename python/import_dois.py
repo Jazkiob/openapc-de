@@ -156,7 +156,7 @@ def main():
 
 def crossref_query_title(title):
     api_url = "https://api.crossref.org/works?"
-    params = {"rows": "5", "query.title": title}
+    params = {"rows": "5", "query.bibliographic": title}
     url = api_url + urlencode(params, quote_via=quote_plus)
     request = Request(url)
     request.add_header("User-Agent", "OpenAPC DOI Importer (https://github.com/OpenAPC/openapc-de/blob/master/python/import_dois.py; mailto:openapc@uni-bielefeld.de)")
@@ -170,7 +170,7 @@ def crossref_query_title(title):
             title = item["title"].pop()
             result = {
                 "crossref_title": title,
-                "similarity": ratio(title.lower(), params["query.title"].lower()),
+                "similarity": ratio(title.lower(), params["query.bibliographic"].lower()),
                 "doi": item["DOI"]
             }
             if most_similar["similarity"] < result["similarity"]:
